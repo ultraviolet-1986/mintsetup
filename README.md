@@ -7,9 +7,12 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 - This is an update of an old command-line project, and it is a work in progress.
 
 **To do:**
-- Add in an 'offline' menu and remove the Main Menu text regarding internect connection.
-- Add better desktop detection to determing whether computer reboots after the BleachBit operation has been completed.
+- Add in an 'offline' menu as well as the default 'online' version, and remove the Main Menu text regarding Internet connection availability.
+- Add better desktop detection to determine what desktop is being used. This can be accessed by viewing the $DESKTOP_SESSION variable.
 - Optimise all root commands to call sudo *only* when required to increase security.
 
 **Change Log:**
-- **16/08/2015**: Updated the script to detect KDE, MATE and Ubuntu desktops and have removed some useless functionality. Some functions have also been abbreviated and optimised.
+- **16/08/2015**
+-- Updated the script to detect KDE, MATE and Ubuntu desktops and have removed some useless functionality.
+-- Some functions have also been streamlined and optimised for the sake of efficiency.
+-- A link to this repository is now inside the source code.
