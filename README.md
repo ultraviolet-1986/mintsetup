@@ -13,6 +13,6 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 
 **Change Log:**
 - **16/08/2015**
--- Updated the script to detect KDE, MATE and Ubuntu desktops and have removed some useless functionality.
--- Some functions have also been streamlined and optimised for the sake of efficiency.
--- A link to this repository is now inside the source code.
+  - Updated the script to detect KDE, MATE and Ubuntu desktops and have removed some useless functionality.
+  - Some functions have also been streamlined and optimised for the sake of efficiency.
+  - A link to this repository is now inside the source code.
