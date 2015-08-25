@@ -259,6 +259,7 @@ favouritesQt() {
 	libgtk2.0-0:i386 \
 	gtk2-engines-oxygen \
 	plasma-widget-lancelot \
+	plasma-widget-homerun \
 	yakuake \
 	libasound2 \
 	libsm6 \
