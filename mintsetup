@@ -198,16 +198,21 @@ favouritesWrapper() {
 favouritesGtk() {
 # Software list. Adjust as desired.
 	sudo apt-get install \
+	libreoffice \
+	libreoffice-help-en-gb \
+	libreoffice-l10n-en-gb \
+	myspell-en-gb \
 	default-jre \
 	openjdk-7-jre \
 	liblwjgl-java \
 	qt4-qtconfig \
 	comix \
 	p7zip-full \
-	clamtk \
+	clamav \
 	bleachbit \
 	firefox \
 	thunderbird \
+	thunderbird-locale-en-gb \
 	linux-headers-`uname -r` \
 	vlc \
 	vlc-plugin-pulse \
@@ -229,6 +234,9 @@ favouritesGtk() {
 	bchunk \
 	lame \
 	flac \
+	sox \
+	mpg123 \
+	mpg321 \
 	dosbox \
 	focuswriter \
 	broadcom-sta-common \
@@ -240,13 +248,18 @@ favouritesGtk() {
 favouritesQt() {
 # Software list. Adjust as desired.
 	sudo apt-get install \
+	libreoffice \
+	libreoffice-help-en-gb \
+	libreoffice-l10n-en-gb \
+	myspell-en-gb \
 	default-jre \
 	comix \
 	p7zip-full \
-	clamtk \
+	clamav \
 	bleachbit \
 	firefox \
 	thunderbird \
+	thunderbird-locale-en-gb \
 	linux-headers-`uname -r` \
 	vlc \
 	vlc-plugin-pulse \
@@ -272,6 +285,9 @@ favouritesQt() {
 	bchunk \
 	lame \
 	flac \
+	sox \
+	mpg123 \
+	mpg321 \
 	dosbox \
 	focuswriter \
 	broadcom-sta-common \

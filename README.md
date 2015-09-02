@@ -18,3 +18,6 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 	- A link to this repository is now inside the source code.
 - **18/08/2015**
 	- Updated the indentation of 'README.md' and 'mintsetup' to use standard tabs.
+- **02/09/2015**
+	- Included some en-GB dependencies for LibreOffice and Mozilla Thunderbird.
+	- Swapped 'clamtk' in 'installFavourites' for 'clamav'.
