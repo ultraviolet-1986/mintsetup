@@ -10,7 +10,7 @@
 # PROGRAM VARIABLES
 ################################################################################
 
-VERSION_NUMBER="2.1.9"
+VERSION_NUMBER="2.2.0"
 
 ################################################################################
 # PROGRAM FUNCTIONS
@@ -34,7 +34,7 @@ completed() {
 	echo " ***********************************************************"
 	read -n1
 	clear
-	menuSetup
+	netCheck
 }
 
 incorrect() {
@@ -49,13 +49,11 @@ incorrect() {
 # OPTION 1 =====================================================================
 
 installUpdates() {
-# This will refresh the repository (or repositories) information.
 	header
 	echo -e " \033[4mCheck for and Install Updates:\033[0m\n"
 	echo -e " This option will refresh the information relating to updates and"
 	echo -e " new packages and allow you to install them should you choose to.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
@@ -68,7 +66,7 @@ installUpdates() {
 			sudo apt-get dselect-upgrade
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			installUpdates ;;
@@ -78,33 +76,25 @@ installUpdates() {
 # OPTION 2 =====================================================================
 
 repairSoftwareCatalog() {
-# This will simply detect and attempt to install packages that may have broken
-# dependencies or that were not installed properly first time.
 	header
 	echo -e " \033[4mRepair Software Catalog:\033[0m\n"
 	echo -e " This will refresh the software catalog, repair any"
 	echo -e " broken dependencies and remove redundant packages.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
 			header
-			# Kill the 'apt-get' and 'dpkg' processes before attempting to
-			# continue the fix.
 			sudo killall dpkg apt-get > /dev/null 2>&1
 			sudo apt-get update
 			echo
-			# This will help if a previous update/installation was interrupted.
 			sudo dpkg --configure -a
-			# This will fix missing dependencies.
 			sudo apt-get install -f
 			echo
-			# This will remove packages which are no longer used.
 			sudo apt-get autoremove
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			repairSoftwareCatalog ;;
@@ -129,24 +119,19 @@ repairPackageManager() {
 			sudo killall dpkg > /dev/null 2>&1
 			sudo killall apt-get > /dev/null 2>&1
 			sudo apt-get clean
-			# Purge APT lists
 			sudo rm /var/lib/apt/lists/* -vf
 			cd /var/lib/apt
-			# Remove the old backups first.
 			sudo rm -r lists.backup > /dev/null 2>&1
 			sudo rm -r lists/partial > /dev/null 2>&1
-			# Create new backups.
 			sudo mv lists lists.backup > /dev/null 2>&1
 			sudo mkdir -p lists/partial > /dev/null 2>&1
-			# This will help if a previous update/installation was interrupted.
 			sudo dpkg --configure -a
-			# Clean and refresh APT.
 			sudo apt-get clean
 			sudo apt-get update
 			cd
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			repairPackageManager ;;
@@ -156,7 +141,6 @@ repairPackageManager() {
 # OPTION 4 =====================================================================
 
 installFavourites() {
-# This option will install the software I typically use for a fresh installation.
 	header
 	echo -e " \033[4mInstall Favourite Software:\033[0m\n"
 	echo -e " This will install software which can ensure the smooth running"
@@ -172,7 +156,7 @@ installFavourites() {
 			favouritesWrapper
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			installFavourites ;;
@@ -196,7 +180,6 @@ favouritesWrapper() {
 }
 
 favouritesGtk() {
-# Software list. Adjust as desired.
 	sudo apt-get install \
 	libreoffice \
 	libreoffice-help-en-gb \
@@ -246,7 +229,6 @@ favouritesGtk() {
 }
 
 favouritesQt() {
-# Software list. Adjust as desired.
 	sudo apt-get install \
 	libreoffice \
 	libreoffice-help-en-gb \
@@ -300,7 +282,6 @@ favouritesQt() {
 # OPTION 5 =====================================================================
 
 setUfwFirewall() {
-# This option will set up your basic firewall.
 	header
 	echo -e " \033[4mSetup Basic 'ufw' Firewall and Activate:\033[0m\n"
 	echo -e " This will enable the built-in firewall and set up the"
@@ -308,7 +289,6 @@ setUfwFirewall() {
 	echo -e " NOTE: 'ufw' MUST be installed for this to function, Option 4"
 	echo -e " will install it for you. It is typically pre-installed.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
@@ -318,7 +298,7 @@ setUfwFirewall() {
 			sudo ufw limit ssh
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			setUfwFirewall ;;
@@ -328,7 +308,6 @@ setUfwFirewall() {
 # OPTION 6 =====================================================================
 
 updateClamAvDefinitions() {
-# This option will update your antivirus definitions.
 	header
 	echo -e " \033[4mUpdate ClamAV Virus Definitions:\033[0m\n"
 	echo -e " This will update the ClamAV antivirus definitions to the"
@@ -336,20 +315,15 @@ updateClamAvDefinitions() {
 	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
 	echo -e " will install it for you along with the ClamTK front-end.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
 			header
-			# Halt Freshclam auto update, and force update through this program.
-			# THIS WILL NOT STOP FRESHCLAM FROM AUTO-UPDATE ALTOGETHER, IT WILL
-			# SIMPLY ALLOW THIS PROGRAM TO UPDATE WHETHER OR NOT IT IS UPDATING
-			# AUTOMATICALLY IN THE BACKGROUND.
 			sudo killall freshclam > /dev/null 2>&1
 			sudo freshclam
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			updateClamAvDefinitions ;;
@@ -359,8 +333,6 @@ updateClamAvDefinitions() {
 # OPTION 7 =====================================================================
 
 clamAvHomeScan() {
-# This option will run a recursive (full) virus scan on your Home Folder.
-# It will also save a log of the scan inside your Home Folder.
 	header
 	echo -e " \033[4mClamAV Home Folder Scan:\033[0m\n"
 	echo -e " This will scan all files and folders in your home folder."
@@ -369,7 +341,6 @@ clamAvHomeScan() {
 	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
 	echo -e " will install it for you along with the ClamTK front-end.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
@@ -380,7 +351,7 @@ clamAvHomeScan() {
 			cd
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			clamAvHomeScan ;;
@@ -390,9 +361,6 @@ clamAvHomeScan() {
 # OPTION 8 =====================================================================
 
 clamAvMediaScan() {
-# This option will run a recursive (full) virus scan on any mounted drives
-# such as USB flash drives or other partitions. It will also save a log of
-# the scan inside your Home Folder.
 	header
 	echo -e " \033[4mClamAV Removable Drive Scan:\033[0m\n"
 	echo -e " This will scan all files and folders on removable drives or"
@@ -402,7 +370,6 @@ clamAvMediaScan() {
 	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
 	echo -e " will install it for you along with the ClamTK front-end.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
@@ -413,7 +380,7 @@ clamAvMediaScan() {
 			cd
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			clamAvMediaScan ;;
@@ -423,8 +390,6 @@ clamAvMediaScan() {
 # OPTION 9 =====================================================================
 
 clamAvFullScan() {
-# This option will run a recursive (full) virus scan on the Root directory.
-# It will also save a log of the scan inside your Home Folder.
 	header
 	echo -e " \033[4mClamAV Full Computer Scan:\033[0m\n"
 	echo -e " This will scan all files and folders on your computer."
@@ -434,7 +399,6 @@ clamAvFullScan() {
 	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
 	echo -e " will install it for you along with the ClamTK front-end.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
@@ -445,7 +409,7 @@ clamAvFullScan() {
 			cd
 			completed ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			clamAvFullScan ;;
@@ -455,7 +419,6 @@ clamAvFullScan() {
 # OPTION 10 ====================================================================
 
 runBleachbit() {
-# This will run BleachBit and reboot the computer.
 	header
 	echo -e " \033[4mRun BleachBit and Reboot:\033[0m\n"
 	echo -e " This option will run BleachBit with a set of pre-defined options.\n"
@@ -467,13 +430,12 @@ runBleachbit() {
 	echo -e " Rebooting will prevent the desktop from crashing upon completion"
 	echo -e " if you are using GNOME 3, Cinnamon or KDE.\n\n"
 
-# This handles the Y/N answer.
 	read -n1 -p " Do you wish to continue [Y/N]? " answer
 	case $answer in
 		Y|y)
 			bleachbitWrapper ;;
 		N|n)
-			menuSetup ;;
+			netCheck ;;
 		*)
 			incorrect
 			runBleachbit ;;
@@ -482,10 +444,6 @@ runBleachbit() {
 
 bleachbitWrapper() {
 	header
-	# Items that will not be erased:
-	# * Flash Cache and Cookies.
-	# * Memory, Localization, and Free Disk Space.
-	# * User passwords (Firefox, Thunderbird, etc...)
 	sudo bleachbit -o -c \
 	adobe_reader.* \
 	amsn.* \
@@ -566,7 +524,6 @@ bleachbitWrapper() {
 	xchat.* \
 	xine.*
 
-	# Remove a little more.
 	rm -r $HOME/.thumbnails > /dev/null 2>&1
 	rm -r $HOME/.recently-used > /dev/null 2>&1
 	rm -r $HOME/.bash_history > /dev/null 2>&1
@@ -583,25 +540,30 @@ bleachbitWrapper() {
 }
 
 restartNow() {
-# Do not prompt the user to restart the machine.
 	sudo reboot
 }
 
+netCheck() {
+	if ping -c 1 'linuxmint.com' &> /dev/null; then
+			netCheck
+		else
+			menuSetupOffline
+	fi
+}
+
 ################################################################################
-# PROGRAM MENU
+# PROGRAM MENUS
 ################################################################################
 
-menuSetup() {
-# This displays the main menu for the script.
+menuSetupOnline() {
 	header
-	echo -e " \033[4mMAIN MENU (Items marked with '*' require an Internet Connection)\033[0m"
-	echo
-	echo -e "\t\033[1m1)\033[0m Check for and Install Updates (*)"
-	echo -e "\t\033[1m2)\033[0m Repair Software Catalog (*)"
-	echo -e "\t\033[1m3)\033[0m Repair APT Package Manager (*)"
-	echo -e "\t\033[1m4)\033[0m Install Favourite Software (*)"
+	echo -e " \033[4mSTATUS: Online\033[0m\n"
+	echo -e "\t\033[1m1)\033[0m Check for and Install Updates"
+	echo -e "\t\033[1m2)\033[0m Repair Software Catalog"
+	echo -e "\t\033[1m3)\033[0m Repair APT Package Manager"
+	echo -e "\t\033[1m4)\033[0m Install Favourite Software"
 	echo -e "\t\033[1m5)\033[0m Setup Basic 'ufw' Firewall and Activate"
-	echo -e "\t\033[1m6)\033[0m Update ClamAV Virus Definitions (*)"
+	echo -e "\t\033[1m6)\033[0m Update ClamAV Virus Definitions"
 	echo -e "\t\033[1m7)\033[0m ClamAV Home Folder Scan"
 	echo -e "\t\033[1m8)\033[0m ClamAV Removable Drive Scan"
 	echo -e "\t\033[1m9)\033[0m ClamAV Full Computer Scan"
@@ -638,7 +600,42 @@ menuSetup() {
 				clear && break ;;
 			*)
 				incorrect
-				menuSetup ;;
+				netCheck ;;
+		esac
+	done
+}
+
+menuSetupOffline() {
+	header
+	echo -e " \033[4mSTATUS: Offline\033[0m\n"
+	echo -e "\t\033[1m1)\033[0m Setup Basic 'ufw' Firewall and Activate"
+	echo -e "\t\033[1m2)\033[0m ClamAV Home Folder Scan"
+	echo -e "\t\033[1m3)\033[0m ClamAV Removable Drive Scan"
+	echo -e "\t\033[1m4)\033[0m ClamAV Full Computer Scan"
+	echo -e "\t\033[1m5)\033[0m Run BleachBit (and Reboot)"
+	echo -e "\t\033[1mX) Exit Program\033[0m"
+	echo
+	echo -en "\tEnter an Option: "
+	read -n1 option
+
+	while [ 1 ]
+	do
+		case $option in
+			1)
+				setUfwFirewall ;;
+			2)
+				clamAvHomeScan ;;
+			3)
+				clamAvMediaScan ;;
+			4)
+				clamAvFullScan ;;
+			5)
+				runBleachbit ;;
+			X|x)
+				clear && break ;;
+			*)
+				incorrect
+				netCheck ;;
 		esac
 	done
 }
@@ -647,6 +644,6 @@ menuSetup() {
 # PROGRAM KICKSTART
 ################################################################################
 
-menuSetup
+netCheck
 
 # End of file.

@@ -7,7 +7,6 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 - This is an update of an old command-line project, and it is a work in progress.
 
 **To do:**
-- Add in an 'offline' menu as well as the default 'online' version, and remove the Main Menu text regarding Internet connection availability.
 - Add better desktop detection to determine what desktop is being used. This can be accessed by viewing the $DESKTOP_SESSION variable.
 - Optimise all root commands to call sudo *only* when required to increase security.
 
@@ -21,3 +20,6 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 - **02/09/2015**
 	- Included some en-GB dependencies for LibreOffice and Mozilla Thunderbird.
 	- Swapped 'clamtk' in 'installFavourites' for 'clamav'.
+- **07/09/2015**
+	- Implemented Internet connection check and alternative menu for 'offline' mode.
+	- Removed all comments so that they can be rewritten and made to be more helpful later.
