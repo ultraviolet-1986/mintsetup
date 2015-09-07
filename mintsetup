@@ -544,8 +544,10 @@ restartNow() {
 }
 
 netCheck() {
-	if ping -c 1 'linuxmint.com' &> /dev/null; then
-			netCheck
+	setterm -cursor off
+	echo "Now checking Internet connection, please wait..."
+	if ping -c 1 'google-public-dns-a.google.com' &> /dev/null; then
+			menuSetupOnline
 		else
 			menuSetupOffline
 	fi
