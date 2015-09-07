@@ -23,3 +23,4 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 - **07/09/2015**
 	- Implemented Internet connection check and alternative menu for 'offline' mode.
 	- Removed all comments so that they can be rewritten and made to be more helpful later.
+	- Altered 'favouritesQt' to eliminate repitition, it follows 'favouritesGtk' in the case of a KDE desktop.

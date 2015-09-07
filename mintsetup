@@ -10,7 +10,7 @@
 # PROGRAM VARIABLES
 ################################################################################
 
-VERSION_NUMBER="2.2.0"
+VERSION_NUMBER="2.2.1"
 
 ################################################################################
 # PROGRAM FUNCTIONS
@@ -166,6 +166,7 @@ installFavourites() {
 favouritesWrapper() {
 	if [ "$DESKTOP_SESSION" = "kde-plasma" ]
 		then
+			favouritesGtk
 			favouritesQt
 		else
 			favouritesGtk
@@ -173,7 +174,6 @@ favouritesWrapper() {
 
 	if [ "$DESKTOP_SESSION" = "ubuntu" ]
 	then
-		echo
 		sudo apt-get install ubuntu-restricted-extras
 		sudo /usr/share/doc/libdvdread4/install-css.sh
 	fi
@@ -181,102 +181,60 @@ favouritesWrapper() {
 
 favouritesGtk() {
 	sudo apt-get install \
-	libreoffice \
-	libreoffice-help-en-gb \
-	libreoffice-l10n-en-gb \
-	myspell-en-gb \
-	default-jre \
-	openjdk-7-jre \
-	liblwjgl-java \
-	qt4-qtconfig \
-	comix \
-	p7zip-full \
-	clamav \
-	bleachbit \
-	firefox \
-	thunderbird \
-	thunderbird-locale-en-gb \
-	linux-headers-`uname -r` \
-	vlc \
-	vlc-plugin-pulse \
-	python-gpgme \
-	unrar \
-	synaptic \
-	ufw \
-	libglu1-mesa \
-	libgtk2.0-0:i386 \
-	libasound2 \
-	libsm6 \
-	libasound2-plugins \
-	libmpg123-0 \
-	libappindicator1 \
-	libjpeg62 \
-	libsdl-mixer1.2 \
-	clementine \
-	easytag \
-	bchunk \
-	lame \
-	flac \
-	sox \
-	mpg123 \
-	mpg321 \
-	dosbox \
-	focuswriter \
-	broadcom-sta-common \
-	broadcom-sta-source \
-	dkms \
-	driconf
+		libreoffice \
+		libreoffice-help-en-gb \
+		libreoffice-l10n-en-gb \
+		myspell-en-gb \
+		default-jre \
+		openjdk-7-jre \
+		liblwjgl-java \
+		qt4-qtconfig \
+		comix \
+		p7zip-full \
+		clamav \
+		bleachbit \
+		firefox \
+		thunderbird \
+		thunderbird-locale-en-gb \
+		linux-headers-`uname -r` \
+		vlc \
+		vlc-plugin-pulse \
+		python-gpgme \
+		unrar \
+		synaptic \
+		ufw \
+		libglu1-mesa \
+		libgtk2.0-0:i386 \
+		libasound2 \
+		libsm6 \
+		libasound2-plugins \
+		libmpg123-0 \
+		libappindicator1 \
+		libjpeg62 \
+		libsdl-mixer1.2 \
+		clementine \
+		easytag \
+		bchunk \
+		lame \
+		flac \
+		sox \
+		mpg123 \
+		mpg321 \
+		focuswriter \
+		broadcom-sta-common \
+		broadcom-sta-source \
+		dkms \
+		driconf
+	echo
 }
 
 favouritesQt() {
 	sudo apt-get install \
-	libreoffice \
-	libreoffice-help-en-gb \
-	libreoffice-l10n-en-gb \
-	myspell-en-gb \
-	default-jre \
-	comix \
-	p7zip-full \
-	clamav \
-	bleachbit \
-	firefox \
-	thunderbird \
-	thunderbird-locale-en-gb \
-	linux-headers-`uname -r` \
-	vlc \
-	vlc-plugin-pulse \
-	wine \
-	python-gpgme \
-	unrar \
-	synaptic \
-	ufw \
-	libglu1-mesa \
-	libgtk2.0-0:i386 \
-	gtk2-engines-oxygen \
-	plasma-widget-lancelot \
-	plasma-widget-homerun \
-	yakuake \
-	libasound2 \
-	libsm6 \
-	libasound2-plugins \
-	libmpg123-0 \
-	libappindicator1 \
-	libjpeg62 \
-	clementine \
-	easytag \
-	bchunk \
-	lame \
-	flac \
-	sox \
-	mpg123 \
-	mpg321 \
-	dosbox \
-	focuswriter \
-	broadcom-sta-common \
-	broadcom-sta-source \
-	bcmwl-kernel-source \
-	dkms \
-	driconf
+		gtk2-engines-oxygen \
+		plasma-widget-lancelot \
+		plasma-widget-homerun \
+		yakuake
+	echo
 }
 
 # OPTION 5 =====================================================================
