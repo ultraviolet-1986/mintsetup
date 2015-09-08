@@ -548,7 +548,7 @@ checkNetwork() {
 
 menuOnline() {
 	header
-	echo -e " \033[1mSTATUS:\033[0m Online"
+	echo -e " \033[1mSTATUS:\033[0m \e[32mOnline\e[0m"
 	echo
 	echo -e "\t\033[1m1)\033[0m Check for and Install Updates"
 	echo -e "\t\033[1m2)\033[0m Repair Software Catalog"
@@ -599,7 +599,7 @@ menuOnline() {
 
 menuOffline() {
 	header
-	echo -e " \033[1mSTATUS:\033[0m Offline"
+	echo -e " \033[1mSTATUS:\033[0m \e[31mOffline\e[0m"
 	echo
 	echo -e "\t\033[1m1)\033[0m Setup Basic 'ufw' Firewall and Activate"
 	echo -e "\t\033[1m2)\033[0m ClamAV Home Folder Scan"
