@@ -10,7 +10,7 @@
 # PROGRAM VARIABLES
 ################################################################################
 
-VERSION_NUMBER="2.2.1"
+VERSION="2.2.2"
 
 ################################################################################
 # PROGRAM FUNCTIONS
@@ -22,8 +22,9 @@ header() {
 	setterm -cursor on
 	clear
 	echo -e " \033[1m#############################################################\033[0m"
-	echo -e " \033[1m#\033[0m Linux Mint / Ubuntu Setup Menu v"$VERSION_NUMBER" ~ By William Willis \033[1m#\033[0m"
-	echo -e " \033[1m#############################################################\033[0m\n"
+	echo -e " \033[1m#\033[0m Linux Mint / Ubuntu Setup Menu v"$VERSION" ~ By William Willis \033[1m#\033[0m"
+	echo -e " \033[1m#############################################################\033[0m"
+	echo
 }
 
 completed() {
@@ -33,13 +34,12 @@ completed() {
 	echo " * Process completed, press any key to return to the menu. *"
 	echo " ***********************************************************"
 	read -n1
-	clear
 	netCheck
 }
 
 incorrect() {
 	setterm -cursor off
-	echo -en "\n\n"
+	echo -e "\n\n"
 	echo " ***********************************************"
 	echo " * Incorrect input, press any key to continue. *"
 	echo " ***********************************************"
@@ -50,12 +50,16 @@ incorrect() {
 
 installUpdates() {
 	header
-	echo -e " \033[4mCheck for and Install Updates:\033[0m\n"
-	echo -e " This option will refresh the information relating to updates and"
-	echo -e " new packages and allow you to install them should you choose to.\n\n"
+	echo -e " \033[4mCheck for and Install Updates:\033[0m"
+	echo
+	echo " This option will refresh the package catalogue and allow you to"
+	echo " install system updates."
+	echo
+	echo " WARNING: On Linux Mint, this will install level 4 and 5 updates."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			sudo killall apt-get > /dev/null 2>&1
@@ -77,12 +81,14 @@ installUpdates() {
 
 repairSoftwareCatalog() {
 	header
-	echo -e " \033[4mRepair Software Catalog:\033[0m\n"
-	echo -e " This will refresh the software catalog, repair any"
-	echo -e " broken dependencies and remove redundant packages.\n\n"
+	echo -e " \033[4mRepair Software Catalog:\033[0m"
+	echo
+	echo " This will refresh the package catalog, attempt to repair any broken"
+	echo " dependencies and remove redundant packages."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			sudo killall dpkg apt-get > /dev/null 2>&1
@@ -105,15 +111,19 @@ repairSoftwareCatalog() {
 
 repairPackageManager() {
 	header
-	echo -e " \033[4mRepair APT Package Manager:\033[0m\n"
-	echo -e " This will completely reset your caches and catalogs in case of a"
-	echo -e " '404: not found' or 'gpg' update error.\n"
-	echo -e " This process may take several minutes, please remain patient.\n"
-	echo -e " For more information, see the related webpage at:"
-	echo -e " 'http://www.ubuntugeek.com/how-to-fix-the-ubuntu-gpg-error-badsig.html'\n\n"
+	echo -e " \033[4mRepair APT Package Manager:\033[0m"
+	echo
+	echo " This will completely reset your package catalog and dependencies in"
+	echo " the event of a '404: NOT FOUND' or 'GPG INVALID' update error."
+	echo
+	echo " This process may take several minutes, please wait..."
+	echo
+	echo " For more information on this problem, read the related webpage at:"
+	echo " 'http://www.ubuntugeek.com/how-to-fix-the-ubuntu-gpg-error-badsig.html'"
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			sudo killall dpkg > /dev/null 2>&1
@@ -142,13 +152,17 @@ repairPackageManager() {
 
 installFavourites() {
 	header
-	echo -e " \033[4mInstall Favourite Software:\033[0m\n"
-	echo -e " This will install software which can ensure the smooth running"
-	echo -e " of a fresh installation of Linux Mint or Ubuntu.\n"
-	echo -e " This process may take several minutes, please remain patient.\n\n"
+	echo -e " \033[4mInstall Favourite Software:\033[0m"
+	echo
+	echo " This option will install a selection of 'favourite' programs for the"
+	echo " user in bulk along with any missing audio/video codecs, and enable"
+	echo " DVD video playback."
+	echo
+	echo " This process may take several minutes, please wait..."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			sudo killall apt-get > /dev/null 2>&1
@@ -173,9 +187,9 @@ favouritesWrapper() {
 	fi
 
 	if [ "$DESKTOP_SESSION" = "ubuntu" ]
-	then
-		sudo apt-get install ubuntu-restricted-extras
-		sudo /usr/share/doc/libdvdread4/install-css.sh
+		then
+			sudo apt-get install ubuntu-restricted-extras
+			sudo /usr/share/doc/libdvdread4/install-css.sh
 	fi
 }
 
@@ -241,14 +255,17 @@ favouritesQt() {
 
 setUfwFirewall() {
 	header
-	echo -e " \033[4mSetup Basic 'ufw' Firewall and Activate:\033[0m\n"
-	echo -e " This will enable the built-in firewall and set up the"
-	echo -e " default rules to 'deny'.\n"
-	echo -e " NOTE: 'ufw' MUST be installed for this to function, Option 4"
-	echo -e " will install it for you. It is typically pre-installed.\n\n"
+	echo -e " \033[4mSetup Basic 'ufw' Firewall and Activate:\033[0m"
+	echo
+	echo " This option will enable the 'ufw' firewall and set up the default"
+	echo " rules to 'deny'."
+	echo
+	echo " NOTE: 'ufw' MUST be installed for this to function, it is typically"
+	echo " pre-installed on Linux Mint and Ubuntu."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			sudo ufw enable
@@ -267,14 +284,16 @@ setUfwFirewall() {
 
 updateClamAvDefinitions() {
 	header
-	echo -e " \033[4mUpdate ClamAV Virus Definitions:\033[0m\n"
-	echo -e " This will update the ClamAV antivirus definitions to the"
-	echo -e " latest version. It keeps scan operations accurate.\n"
-	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
-	echo -e " will install it for you along with the ClamTK front-end.\n\n"
+	echo -e " \033[4mUpdate ClamAV Virus Definitions:\033[0m"
+	echo
+	echo " This will update the ClamAV antivirus definitions to the latest"
+	echo " version. It ensures scan operations are accurate and up-to-date."
+	echo
+	echo " NOTE: ClamAV MUST be installed for this to function."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			sudo killall freshclam > /dev/null 2>&1
@@ -292,15 +311,18 @@ updateClamAvDefinitions() {
 
 clamAvHomeScan() {
 	header
-	echo -e " \033[4mClamAV Home Folder Scan:\033[0m\n"
-	echo -e " This will scan all files and folders in your home folder."
-	echo -e " A log of this scan will be saved in your home folder.\n"
-	echo -e " This process may take a long time, please remain patient.\n"
-	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
-	echo -e " will install it for you along with the ClamTK front-end.\n\n"
+	echo -e " \033[4mClamAV Home Folder Scan:\033[0m"
+	echo
+	echo " This will scan all files and folders inside your home folder. A log"
+	echo " of this scan will be saved in your home folder."
+	echo
+	echo " This process may take a long time, please wait..."
+	echo
+	echo " NOTE: ClamAV MUST be installed for this to function."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			cd
@@ -320,16 +342,19 @@ clamAvHomeScan() {
 
 clamAvMediaScan() {
 	header
-	echo -e " \033[4mClamAV Removable Drive Scan:\033[0m\n"
-	echo -e " This will scan all files and folders on removable drives or"
-	echo -e " other mounted partitions and devices such as USB flash drives."
-	echo -e " A log of this scan will be saved in your home folder.\n"
-	echo -e " This process may take a long time, please remain patient.\n"
-	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
-	echo -e " will install it for you along with the ClamTK front-end.\n\n"
+	echo -e " \033[4mClamAV Removable Drive Scan:\033[0m"
+	echo
+	echo " This will scan all files and folders on removable drives or other"
+	echo " mounted partitions and devices such as USB flash drives. A log of"
+	echo " this scan will be saved in your home folder."
+	echo
+	echo " This process may take a long time, please wait..."
+	echo
+	echo " NOTE: ClamAV MUST be installed for this to function."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			cd
@@ -349,16 +374,19 @@ clamAvMediaScan() {
 
 clamAvFullScan() {
 	header
-	echo -e " \033[4mClamAV Full Computer Scan:\033[0m\n"
-	echo -e " This will scan all files and folders on your computer."
-	echo -e " It will also scan any device connected to it."
-	echo -e " A log of this scan will be saved in your home folder.\n"
-	echo -e " This process may take a long time, please remain patient.\n"
-	echo -e " NOTE: ClamAV MUST be installed for this to function, Option 4"
-	echo -e " will install it for you along with the ClamTK front-end.\n\n"
+	echo -e " \033[4mClamAV Full Computer Scan:\033[0m"
+	echo
+	echo " This option will scan all files and folders on your computer. It"
+	echo " will also scan any device connected to it. A log of this scan will"
+	echo " be saved in your home folder."
+	echo
+	echo " This process may take a long time, please wait..."
+	echo
+	echo " NOTE: ClamAV MUST be installed for this to function."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			header
 			cd
@@ -378,18 +406,20 @@ clamAvFullScan() {
 
 runBleachbit() {
 	header
-	echo -e " \033[4mRun BleachBit and Reboot:\033[0m\n"
-	echo -e " This option will run BleachBit with a set of pre-defined options.\n"
-	echo -e " User passwords and Flash cache/cookies will not be erased.\n"
-	echo -e " If BleachBit is not installed, use Option 4 on the main menu to"
-	echo -e " install it. User configuration is unnecessary.\n"
-	echo -e " MATE, XFCE and GNOME 2 users do not need to reboot. Set the option"
-	echo -e " in the 'runBleachbit' comments for your convenience and preference.\n"
-	echo -e " Rebooting will prevent the desktop from crashing upon completion"
-	echo -e " if you are using GNOME 3, Cinnamon or KDE.\n\n"
+	echo -e " \033[4mRun BleachBit (and Reboot):\033[0m"
+	echo
+	echo " This option will run BleachBit with a set of pre-defined options."
+	echo
+	echo " User passwords and Flash cache/cookies will not be erased."
+	echo
+	echo " If using GNOME3/KDE, your computer will automatically reboot once"
+	echo " the process is complete."
+	echo
+	echo " NOTE: BleachBit must be installed for this option to work."
+	echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " answer
-	case $answer in
+	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+	case $ANSWER in
 		Y|y)
 			bleachbitWrapper ;;
 		N|n)
@@ -502,9 +532,10 @@ restartNow() {
 }
 
 netCheck() {
+	clear
 	setterm -cursor off
-	echo "Now checking Internet connection, please wait..."
-	if ping -c 1 'google-public-dns-a.google.com' &> /dev/null; then
+	echo "Checking Internet connection, please wait..."
+	if ping -c 1 'google-public-dns-a.google.com' &> /dev/null ; then
 			menuSetupOnline
 		else
 			menuSetupOffline
@@ -517,7 +548,8 @@ netCheck() {
 
 menuSetupOnline() {
 	header
-	echo -e " \033[4mSTATUS: Online\033[0m\n"
+	echo -e " \033[1mSTATUS:\033[0m Online"
+	echo
 	echo -e "\t\033[1m1)\033[0m Check for and Install Updates"
 	echo -e "\t\033[1m2)\033[0m Repair Software Catalog"
 	echo -e "\t\033[1m3)\033[0m Repair APT Package Manager"
@@ -531,11 +563,11 @@ menuSetupOnline() {
 	echo -e "\t\033[1mX) Exit Program\033[0m"
 	echo
 	echo -en "\tEnter an Option: "
-	read -n1 option
+	read -n1 OPTION
 
 	while [ 1 ]
 	do
-		case $option in
+		case $OPTION in
 			1)
 				installUpdates ;;
 			2)
@@ -567,7 +599,8 @@ menuSetupOnline() {
 
 menuSetupOffline() {
 	header
-	echo -e " \033[4mSTATUS: Offline\033[0m\n"
+	echo -e " \033[1mSTATUS:\033[0m Offline"
+	echo
 	echo -e "\t\033[1m1)\033[0m Setup Basic 'ufw' Firewall and Activate"
 	echo -e "\t\033[1m2)\033[0m ClamAV Home Folder Scan"
 	echo -e "\t\033[1m3)\033[0m ClamAV Removable Drive Scan"
@@ -576,11 +609,11 @@ menuSetupOffline() {
 	echo -e "\t\033[1mX) Exit Program\033[0m"
 	echo
 	echo -en "\tEnter an Option: "
-	read -n1 option
+	read -n1 OPTION
 
 	while [ 1 ]
 	do
-		case $option in
+		case $OPTION in
 			1)
 				setUfwFirewall ;;
 			2)

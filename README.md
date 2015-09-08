@@ -7,8 +7,7 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 - This is an update of an old command-line project, and it is a work in progress.
 
 **To do:**
-- Add better desktop detection to determine what desktop is being used. This can be accessed by viewing the $DESKTOP_SESSION variable.
-- Optimise all root commands to call sudo *only* when required to increase security.
+- Optimise all root commands to call sudo *only* when required to increase security (review best practices for this).
 
 **Change Log:**
 - **16/08/2015**
@@ -24,3 +23,8 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 	- Implemented Internet connection check and alternative menu for 'offline' mode.
 	- Removed all comments so that they can be rewritten and made to be more helpful later.
 	- Altered 'favouritesQt' to eliminate repitition, it follows 'favouritesGtk' in the case of a KDE desktop.
+	- Changed the 'Main Menu' header to inform the user whether the script is running in 'online' or 'offline' mode.
+- **08/09/2015**
+	- Altered all option introduction text to make it a little easier to read.
+	- Refactored some lower-cased variables to their correct upper-case counterparts.
+	- Altered some 'echo' commands to make script source text easier to read.
