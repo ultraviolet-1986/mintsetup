@@ -519,7 +519,7 @@ bleachbitWrapper() {
 	mkdir $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
 	rm -r $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
 
-	if [ "$DESKTOP_SESSION" = "mate" ]
+	if [ "$DESKTOP_SESSION" = "mate" ] || [ "$DESKTOP_SESSION" = "xfce" ]
 		then
 			completed
 		else
