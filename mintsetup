@@ -34,7 +34,7 @@ completed() {
 	echo " * Process completed, press any key to return to the menu. *"
 	echo " ***********************************************************"
 	read -n1
-	netCheck
+	checkNetwork
 }
 
 incorrect() {
@@ -46,13 +46,13 @@ incorrect() {
 	read -n1
 }
 
-# OPTION 1 =====================================================================
+# INSTALL SYSTEM UPDATES =======================================================
 
 installUpdates() {
 	header
-	echo -e " \033[4mCheck for and Install Updates:\033[0m"
+	echo -e " \033[4mCheck for and install System Updates:\033[0m"
 	echo
-	echo " This option will refresh the package catalogue and allow you to"
+	echo " This option will refresh the package catalog and allow you to"
 	echo " install system updates."
 	echo
 	echo " WARNING: On Linux Mint, this will install level 4 and 5 updates."
@@ -70,14 +70,14 @@ installUpdates() {
 			sudo apt-get dselect-upgrade
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			installUpdates ;;
 	esac
 }
 
-# OPTION 2 =====================================================================
+# REPAIR SOFTWARE CATALOG ======================================================
 
 repairSoftwareCatalog() {
 	header
@@ -100,14 +100,14 @@ repairSoftwareCatalog() {
 			sudo apt-get autoremove
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			repairSoftwareCatalog ;;
 	esac
 }
 
-# OPTION 3 =====================================================================
+# REPAIR PACKAGE MANAGER =======================================================
 
 repairPackageManager() {
 	header
@@ -141,14 +141,14 @@ repairPackageManager() {
 			cd
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			repairPackageManager ;;
 	esac
 }
 
-# OPTION 4 =====================================================================
+# INSTALL FAVOURITES ===========================================================
 
 installFavourites() {
 	header
@@ -170,7 +170,7 @@ installFavourites() {
 			favouritesWrapper
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			installFavourites ;;
@@ -251,7 +251,7 @@ favouritesQt() {
 	echo
 }
 
-# OPTION 5 =====================================================================
+# SETUP FIREWALL ===============================================================
 
 setUfwFirewall() {
 	header
@@ -273,14 +273,14 @@ setUfwFirewall() {
 			sudo ufw limit ssh
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			setUfwFirewall ;;
 	esac
 }
 
-# OPTION 6 =====================================================================
+# UPDATE ANTIVIRUS DEFINITIONS =================================================
 
 updateClamAvDefinitions() {
 	header
@@ -300,14 +300,14 @@ updateClamAvDefinitions() {
 			sudo freshclam
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			updateClamAvDefinitions ;;
 	esac
 }
 
-# OPTION 7 =====================================================================
+# HOME FOLDER VIRUS SCAN =======================================================
 
 clamAvHomeScan() {
 	header
@@ -331,14 +331,14 @@ clamAvHomeScan() {
 			cd
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			clamAvHomeScan ;;
 	esac
 }
 
-# OPTION 8 =====================================================================
+# REMOVABLE MEDIA VIRUS SCAN ===================================================
 
 clamAvMediaScan() {
 	header
@@ -363,14 +363,14 @@ clamAvMediaScan() {
 			cd
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			clamAvMediaScan ;;
 	esac
 }
 
-# OPTION 9 =====================================================================
+# VIRUS SCAN ENTIRE SYSTEM =====================================================
 
 clamAvFullScan() {
 	header
@@ -395,14 +395,14 @@ clamAvFullScan() {
 			cd
 			completed ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			clamAvFullScan ;;
 	esac
 }
 
-# OPTION 10 ====================================================================
+# RUN BLEACHBIT ================================================================
 
 runBleachbit() {
 	header
@@ -423,7 +423,7 @@ runBleachbit() {
 		Y|y)
 			bleachbitWrapper ;;
 		N|n)
-			netCheck ;;
+			checkNetwork ;;
 		*)
 			incorrect
 			runBleachbit ;;
@@ -531,14 +531,14 @@ restartNow() {
 	sudo reboot
 }
 
-netCheck() {
+checkNetwork() {
 	clear
 	setterm -cursor off
 	echo "Checking Internet connection, please wait..."
 	if ping -c 1 'google-public-dns-a.google.com' &> /dev/null ; then
-			menuSetupOnline
+			menuOnline
 		else
-			menuSetupOffline
+			menuOffline
 	fi
 }
 
@@ -546,7 +546,7 @@ netCheck() {
 # PROGRAM MENUS
 ################################################################################
 
-menuSetupOnline() {
+menuOnline() {
 	header
 	echo -e " \033[1mSTATUS:\033[0m Online"
 	echo
@@ -592,12 +592,12 @@ menuSetupOnline() {
 				clear && break ;;
 			*)
 				incorrect
-				netCheck ;;
+				checkNetwork ;;
 		esac
 	done
 }
 
-menuSetupOffline() {
+menuOffline() {
 	header
 	echo -e " \033[1mSTATUS:\033[0m Offline"
 	echo
@@ -628,7 +628,7 @@ menuSetupOffline() {
 				clear && break ;;
 			*)
 				incorrect
-				netCheck ;;
+				checkNetwork ;;
 		esac
 	done
 }
@@ -637,6 +637,6 @@ menuSetupOffline() {
 # PROGRAM KICKSTART
 ################################################################################
 
-netCheck
+checkNetwork
 
 # End of file.

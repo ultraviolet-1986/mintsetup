@@ -28,3 +28,4 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 	- Altered all option introduction text to make it a little easier to read.
 	- Refactored some lower-cased variables to their correct upper-case counterparts.
 	- Altered some 'echo' commands to make script source text easier to read.
+	- Renamed comment headers and text so that no option is referred to as a number anymore.
