@@ -10,7 +10,7 @@
 # PROGRAM VARIABLES
 ################################################################################
 
-VERSION="2.2.2"
+VERSION="2.2.3"
 
 ################################################################################
 # PROGRAM FUNCTIONS
@@ -50,7 +50,7 @@ incorrect() {
 
 installUpdates() {
 	header
-	echo -e " \033[4mCheck for and install System Updates:\033[0m"
+	echo -e " \033[1mCheck for and install System Updates:\033[0m"
 	echo
 	echo " This option will refresh the package catalog and allow you to"
 	echo " install system updates."
@@ -81,7 +81,7 @@ installUpdates() {
 
 repairSoftwareCatalog() {
 	header
-	echo -e " \033[4mRepair Software Catalog:\033[0m"
+	echo -e " \033[1mRepair Software Catalog:\033[0m"
 	echo
 	echo " This will refresh the package catalog, attempt to repair any broken"
 	echo " dependencies and remove redundant packages."
@@ -111,7 +111,7 @@ repairSoftwareCatalog() {
 
 repairPackageManager() {
 	header
-	echo -e " \033[4mRepair APT Package Manager:\033[0m"
+	echo -e " \033[1mRepair APT Package Manager:\033[0m"
 	echo
 	echo " This will completely reset your package catalog and dependencies in"
 	echo " the event of a '404: NOT FOUND' or 'GPG INVALID' update error."
@@ -152,7 +152,7 @@ repairPackageManager() {
 
 installFavourites() {
 	header
-	echo -e " \033[4mInstall Favourite Software:\033[0m"
+	echo -e " \033[1mInstall Favourite Software:\033[0m"
 	echo
 	echo " This option will install a selection of 'favourite' programs for the"
 	echo " user in bulk along with any missing audio/video codecs, and enable"
@@ -255,7 +255,7 @@ favouritesQt() {
 
 setUfwFirewall() {
 	header
-	echo -e " \033[4mSetup Basic 'ufw' Firewall and Activate:\033[0m"
+	echo -e " \033[1mSetup Basic 'ufw' Firewall and Activate:\033[0m"
 	echo
 	echo " This option will enable the 'ufw' firewall and set up the default"
 	echo " rules to 'deny'."
@@ -284,7 +284,7 @@ setUfwFirewall() {
 
 updateClamAvDefinitions() {
 	header
-	echo -e " \033[4mUpdate ClamAV Virus Definitions:\033[0m"
+	echo -e " \033[1mUpdate ClamAV Virus Definitions:\033[0m"
 	echo
 	echo " This will update the ClamAV antivirus definitions to the latest"
 	echo " version. It ensures scan operations are accurate and up-to-date."
@@ -311,7 +311,7 @@ updateClamAvDefinitions() {
 
 clamAvHomeScan() {
 	header
-	echo -e " \033[4mClamAV Home Folder Scan:\033[0m"
+	echo -e " \033[1mClamAV Home Folder Scan:\033[0m"
 	echo
 	echo " This will scan all files and folders inside your home folder. A log"
 	echo " of this scan will be saved in your home folder."
@@ -342,7 +342,7 @@ clamAvHomeScan() {
 
 clamAvMediaScan() {
 	header
-	echo -e " \033[4mClamAV Removable Drive Scan:\033[0m"
+	echo -e " \033[1mClamAV Removable Drive Scan:\033[0m"
 	echo
 	echo " This will scan all files and folders on removable drives or other"
 	echo " mounted partitions and devices such as USB flash drives. A log of"
@@ -374,7 +374,7 @@ clamAvMediaScan() {
 
 clamAvFullScan() {
 	header
-	echo -e " \033[4mClamAV Full Computer Scan:\033[0m"
+	echo -e " \033[1mClamAV Full Computer Scan:\033[0m"
 	echo
 	echo " This option will scan all files and folders on your computer. It"
 	echo " will also scan any device connected to it. A log of this scan will"
@@ -406,7 +406,7 @@ clamAvFullScan() {
 
 runBleachbit() {
 	header
-	echo -e " \033[4mRun BleachBit (and Reboot):\033[0m"
+	echo -e " \033[1mRun BleachBit (and Reboot):\033[0m"
 	echo
 	echo " This option will run BleachBit with a set of pre-defined options."
 	echo
