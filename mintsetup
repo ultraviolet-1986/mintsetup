@@ -195,58 +195,58 @@ favourites_wrapper() {
 
 favourites_gtk() {
   sudo apt-get install \
+    bchunk \
+    bleachbit \
+    broadcom-sta-common \
+    broadcom-sta-source \
+    clamav \
+    clementine \
+    comix \
+    default-jre \
+    dkms \
+    driconf \
+    easytag \
+    firefox \
+    flac \
+    focuswriter \
+    lame \
+    libappindicator1 \
+    libasound2 \
+    libasound2-plugins \
+    libglu1-mesa \
+    libgtk2.0-0:i386 \
+    libjpeg62 \
+    liblwjgl-java \
+    libmpg123-0 \
     libreoffice \
     libreoffice-help-en-gb \
     libreoffice-l10n-en-gb \
-    myspell-en-gb \
-    default-jre \
-    openjdk-7-jre \
-    liblwjgl-java \
-    qt4-qtconfig \
-    comix \
-    p7zip-full \
-    clamav \
-    bleachbit \
-    firefox \
-    thunderbird \
-    thunderbird-locale-en-gb \
-    linux-headers-`uname -r` \
-    vlc \
-    vlc-plugin-pulse \
-    python-gpgme \
-    unrar \
-    synaptic \
-    ufw \
-    libglu1-mesa \
-    libgtk2.0-0:i386 \
-    libasound2 \
-    libsm6 \
-    libasound2-plugins \
-    libmpg123-0 \
-    libappindicator1 \
-    libjpeg62 \
     libsdl-mixer1.2 \
-    clementine \
-    easytag \
-    bchunk \
-    lame \
-    flac \
-    sox \
+    libsm6 \
+    linux-headers-`uname -r` \
     mpg123 \
     mpg321 \
-    focuswriter \
-    broadcom-sta-common \
-    broadcom-sta-source \
-    dkms \
-    driconf
+    myspell-en-gb \
+    openjdk-7-jre \
+    p7zip-full \
+    python-gpgme \
+    qt4-qtconfig \
+    sox \
+    synaptic \
+    thunderbird \
+    thunderbird-locale-en-gb \
+    ufw \
+    unrar \
+    vlc \
+    vlc-plugin-pulse
   echo
 }
 
 favourites_qt() {
   sudo apt-get install \
     gtk2-engines-oxygen \
-    plasma-widget-lancelot \
     plasma-widget-homerun \
+    plasma-widget-lancelot \
     yakuake
   echo
 }
@@ -433,84 +433,84 @@ run_bleachbit() {
 bleachbit_wrapper() {
   header
   sudo bleachbit -o -c \
-  adobe_reader.* \
-  amsn.* \
-  amule.* \
-  audacious.* \
-  bash.* \
-  beagle.* \
-  chromium.* \
-  d4x.* \
-  deepscan.* \
-  easytag.* \
-  elinks.* \
-  emesene.* \
-  epiphany.cache \
-  epiphany.cookies \
-  epiphany.places \
-  evolution.* \
-  exaile.* \
-  filezilla.* \
-  firefox.cache \
-  firefox.cookies \
-  firefox.dom \
-  firefox.download_history \
-  firefox.forms \
-  firefox.session_restore \
-  firefox.site_preferences \
-  firefox.url_history \
-  firefox.vacuum \
-  gedit.* \
-  gftp.* \
-  gimp.* \
-  gl-117.* \
-  gnome.* \
-  google_chrome.* \
-  google_earth.* \
-  google_toolbar.* \
-  gpodder.* \
-  gwenview.* \
-  hippo_opensim_viewer.* \
-  java.* \
-  kde.* \
-  konqueror.* \
-  liferea.* \
-  links2.* \
-  midnightcommander.* \
-  miro.* \
-  nautilus.* \
-  nexuiz.* \
-  openofficeorg.* \
-  opera.* \
-  pidgin.* \
-  realplayer.* \
-  recoll.* \
-  rhythmbox.* \
-  screenlets.* \
-  seamonkey.* \
-  secondlife_viewer.* \
-  skype.* \
-  system.cache \
-  system.clipboard \
-  system.desktop_entry \
-  system.recent_documents \
-  system.rotated_logs \
-  system.tmp \
-  system.trash \
-  thumbnails.* \
-  thunderbird.cache \
-  thunderbird.cookies \
-  thunderbird.vacuum \
-  transmission.cache \
-  tremulous.* \
-  vim.* \
-  vlc.* \
-  vuze.* \
-  wine.* \
-  winetricks.* \
-  x11.* \
-  xchat.* \
-  xine.*
+    adobe_reader.* \
+    amsn.* \
+    amule.* \
+    audacious.* \
+    bash.* \
+    beagle.* \
+    chromium.* \
+    d4x.* \
+    deepscan.* \
+    easytag.* \
+    elinks.* \
+    emesene.* \
+    epiphany.cache \
+    epiphany.cookies \
+    epiphany.places \
+    evolution.* \
+    exaile.* \
+    filezilla.* \
+    firefox.cache \
+    firefox.cookies \
+    firefox.dom \
+    firefox.download_history \
+    firefox.forms \
+    firefox.session_restore \
+    firefox.site_preferences \
+    firefox.url_history \
+    firefox.vacuum \
+    gedit.* \
+    gftp.* \
+    gimp.* \
+    gl-117.* \
+    gnome.* \
+    google_chrome.* \
+    google_earth.* \
+    google_toolbar.* \
+    gpodder.* \
+    gwenview.* \
+    hippo_opensim_viewer.* \
+    java.* \
+    kde.* \
+    konqueror.* \
+    liferea.* \
+    links2.* \
+    midnightcommander.* \
+    miro.* \
+    nautilus.* \
+    nexuiz.* \
+    openofficeorg.* \
+    opera.* \
+    pidgin.* \
+    realplayer.* \
+    recoll.* \
+    rhythmbox.* \
+    screenlets.* \
+    seamonkey.* \
+    secondlife_viewer.* \
+    skype.* \
+    system.cache \
+    system.clipboard \
+    system.desktop_entry \
+    system.recent_documents \
+    system.rotated_logs \
+    system.tmp \
+    system.trash \
+    thumbnails.* \
+    thunderbird.cache \
+    thunderbird.cookies \
+    thunderbird.vacuum \
+    transmission.cache \
+    tremulous.* \
+    vim.* \
+    vlc.* \
+    vuze.* \
+    wine.* \
+    winetricks.* \
+    x11.* \
+    xchat.* \
+    xine.*
 
   rm -r $HOME/.thumbnails > /dev/null 2>&1
   rm -r $HOME/.recently-used > /dev/null 2>&1
