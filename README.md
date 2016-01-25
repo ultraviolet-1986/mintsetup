@@ -1,7 +1,7 @@
 # mintsetup
 A BASH script to help users set up and maintain a new Linux Mint / Ubuntu installation
 
-**Build Environment:** Linux Mint 17.2 KDE amd64, Sublime Text 3
+**Build Environment:** Linux Mint 17.3 Cinnamon amd64, Sublime Text 3
 
 **Notes:**
 - This is an update of an old command-line project, and it is a work in progress.
@@ -29,3 +29,6 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 	- Refactored some lower-cased variables to their correct upper-case counterparts.
 	- Altered some 'echo' commands to make script source text easier to read.
 	- Renamed comment headers and text so that no option is referred to as a number anymore.
+- **25/01/2016**
+	- Renamed all functions to match formatting for standard BASH scripting conventions.
+	- Converted 4-space tabbed spaces to 2-spaced raw space characters for matching standard BASH scripting conventions.
