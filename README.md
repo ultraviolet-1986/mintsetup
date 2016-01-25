@@ -32,3 +32,4 @@ A BASH script to help users set up and maintain a new Linux Mint / Ubuntu instal
 - **25/01/2016**
 	- Renamed all functions to match formatting for standard BASH scripting conventions.
 	- Converted 4-space tabbed spaces to 2-spaced raw space characters for matching standard BASH scripting conventions.
+	- Have alphabetised the software lists so the source code is a little more human-readable.
