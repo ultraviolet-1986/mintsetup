@@ -2,15 +2,15 @@
 # Script Name: mintsetup
 # Purpose: To ease the setup of a fresh Linux Mint / Ubuntu installation.
 # Author: William Willis Whinn
-# Updated: 16/08/2015
-# Notes: Written using the Sublime Text on Linux Mint 17.2 KDE LTS.
+# Updated: 25/01/2016
+# Notes: Written using the Sublime Text 3 on Linux Mint 17.3 Cinnamon LTS.
 # Website: https://github.com/ultraviolet-1986/mintsetup
 
 ################################################################################
 # PROGRAM VARIABLES
 ################################################################################
 
-VERSION="2.2.3"
+VERSION="2.3.0"
 
 ################################################################################
 # PROGRAM FUNCTIONS
@@ -19,624 +19,624 @@ VERSION="2.2.3"
 # NOTIFICATIONS ================================================================
 
 header() {
-	setterm -cursor on
-	clear
-	echo -e " \033[1m#############################################################\033[0m"
-	echo -e " \033[1m#\033[0m Linux Mint / Ubuntu Setup Menu v"$VERSION" ~ By William Willis \033[1m#\033[0m"
-	echo -e " \033[1m#############################################################\033[0m"
-	echo
+  setterm -cursor on
+  clear
+  echo -e " \033[1m#############################################################\033[0m"
+  echo -e " \033[1m#\033[0m Linux Mint / Ubuntu Setup Menu v"$VERSION" ~ By William Willis \033[1m#\033[0m"
+  echo -e " \033[1m#############################################################\033[0m"
+  echo
 }
 
 completed() {
-	setterm -cursor off
-	echo
-	echo " ***********************************************************"
-	echo " * Process completed, press any key to return to the menu. *"
-	echo " ***********************************************************"
-	read -n1
-	checkNetwork
+  setterm -cursor off
+  echo
+  echo " ***********************************************************"
+  echo " * Process completed, press any key to return to the menu. *"
+  echo " ***********************************************************"
+  read -n1
+  check_network
 }
 
 incorrect() {
-	setterm -cursor off
-	echo -e "\n\n"
-	echo " ***********************************************"
-	echo " * Incorrect input, press any key to continue. *"
-	echo " ***********************************************"
-	read -n1
+  setterm -cursor off
+  echo -e "\n\n"
+  echo " ***********************************************"
+  echo " * Incorrect input, press any key to continue. *"
+  echo " ***********************************************"
+  read -n1
 }
 
 # INSTALL SYSTEM UPDATES =======================================================
 
-installUpdates() {
-	header
-	echo -e " \033[1mCheck for and install System Updates:\033[0m"
-	echo
-	echo " This option will refresh the package catalog and allow you to"
-	echo " install system updates."
-	echo
-	echo " WARNING: On Linux Mint, this will install level 4 and 5 updates."
-	echo
+install_updates() {
+  header
+  echo -e " \033[1mCheck for and install System Updates:\033[0m"
+  echo
+  echo " This option will refresh the package catalog and allow you to"
+  echo " install system updates."
+  echo
+  echo " WARNING: On Linux Mint, this will install level 4 and 5 updates."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			sudo killall apt-get > /dev/null 2>&1
-			sudo apt-get update
-			echo
-			sudo apt-get upgrade
-			echo
-			sudo apt-get dselect-upgrade
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			installUpdates ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      sudo killall apt-get > /dev/null 2>&1
+      sudo apt-get update
+      echo
+      sudo apt-get upgrade
+      echo
+      sudo apt-get dselect-upgrade
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      install_updates ;;
+  esac
 }
 
 # REPAIR SOFTWARE CATALOG ======================================================
 
-repairSoftwareCatalog() {
-	header
-	echo -e " \033[1mRepair Software Catalog:\033[0m"
-	echo
-	echo " This will refresh the package catalog, attempt to repair any broken"
-	echo " dependencies and remove redundant packages."
-	echo
+repair_software_catalog() {
+  header
+  echo -e " \033[1mRepair Software Catalog:\033[0m"
+  echo
+  echo " This will refresh the package catalog, attempt to repair any broken"
+  echo " dependencies and remove redundant packages."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			sudo killall dpkg apt-get > /dev/null 2>&1
-			sudo apt-get update
-			echo
-			sudo dpkg --configure -a
-			sudo apt-get install -f
-			echo
-			sudo apt-get autoremove
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			repairSoftwareCatalog ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      sudo killall dpkg apt-get > /dev/null 2>&1
+      sudo apt-get update
+      echo
+      sudo dpkg --configure -a
+      sudo apt-get install -f
+      echo
+      sudo apt-get autoremove
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      repair_software_catalog ;;
+  esac
 }
 
 # REPAIR PACKAGE MANAGER =======================================================
 
-repairPackageManager() {
-	header
-	echo -e " \033[1mRepair APT Package Manager:\033[0m"
-	echo
-	echo " This will completely reset your package catalog and dependencies in"
-	echo " the event of a '404: NOT FOUND' or 'GPG INVALID' update error."
-	echo
-	echo " This process may take several minutes, please wait..."
-	echo
-	echo " For more information on this problem, read the related webpage at:"
-	echo " 'http://www.ubuntugeek.com/how-to-fix-the-ubuntu-gpg-error-badsig.html'"
-	echo
+repair_package_manager() {
+  header
+  echo -e " \033[1mRepair APT Package Manager:\033[0m"
+  echo
+  echo " This will completely reset your package catalog and dependencies in"
+  echo " the event of a '404: NOT FOUND' or 'GPG INVALID' update error."
+  echo
+  echo " This process may take several minutes, please wait..."
+  echo
+  echo " For more information on this problem, read the related webpage at:"
+  echo " 'http://www.ubuntugeek.com/how-to-fix-the-ubuntu-gpg-error-badsig.html'"
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			sudo killall dpkg > /dev/null 2>&1
-			sudo killall apt-get > /dev/null 2>&1
-			sudo apt-get clean
-			sudo rm /var/lib/apt/lists/* -vf
-			cd /var/lib/apt
-			sudo rm -r lists.backup > /dev/null 2>&1
-			sudo rm -r lists/partial > /dev/null 2>&1
-			sudo mv lists lists.backup > /dev/null 2>&1
-			sudo mkdir -p lists/partial > /dev/null 2>&1
-			sudo dpkg --configure -a
-			sudo apt-get clean
-			sudo apt-get update
-			cd
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			repairPackageManager ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      sudo killall dpkg > /dev/null 2>&1
+      sudo killall apt-get > /dev/null 2>&1
+      sudo apt-get clean
+      sudo rm /var/lib/apt/lists/* -vf
+      cd /var/lib/apt
+      sudo rm -r lists.backup > /dev/null 2>&1
+      sudo rm -r lists/partial > /dev/null 2>&1
+      sudo mv lists lists.backup > /dev/null 2>&1
+      sudo mkdir -p lists/partial > /dev/null 2>&1
+      sudo dpkg --configure -a
+      sudo apt-get clean
+      sudo apt-get update
+      cd
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      repair_package_manager ;;
+  esac
 }
 
 # INSTALL FAVOURITES ===========================================================
 
-installFavourites() {
-	header
-	echo -e " \033[1mInstall Favourite Software:\033[0m"
-	echo
-	echo " This option will install a selection of 'favourite' programs for the"
-	echo " user in bulk along with any missing audio/video codecs, and enable"
-	echo " DVD video playback."
-	echo
-	echo " This process may take several minutes, please wait..."
-	echo
+install_favourites() {
+  header
+  echo -e " \033[1mInstall Favourite Software:\033[0m"
+  echo
+  echo " This option will install a selection of 'favourite' programs for the"
+  echo " user in bulk along with any missing audio/video codecs, and enable"
+  echo " DVD video playback."
+  echo
+  echo " This process may take several minutes, please wait..."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			sudo killall apt-get > /dev/null 2>&1
-			sudo apt-get update
-			favouritesWrapper
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			installFavourites ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      sudo killall apt-get > /dev/null 2>&1
+      sudo apt-get update
+      favourites_wrapper
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      install_favourites ;;
+  esac
 }
 
-favouritesWrapper() {
-	if [ "$DESKTOP_SESSION" = "kde-plasma" ]
-		then
-			favouritesGtk
-			favouritesQt
-		else
-			favouritesGtk
-	fi
+favourites_wrapper() {
+  if [ "$DESKTOP_SESSION" = "kde-plasma" ]
+    then
+      favourites_gtk
+      favourites_qt
+    else
+      favourites_gtk
+  fi
 
-	if [ "$DESKTOP_SESSION" = "ubuntu" ]
-		then
-			sudo apt-get install ubuntu-restricted-extras
-			sudo /usr/share/doc/libdvdread4/install-css.sh
-	fi
+  if [ "$DESKTOP_SESSION" = "ubuntu" ]
+    then
+      sudo apt-get install ubuntu-restricted-extras
+      sudo /usr/share/doc/libdvdread4/install-css.sh
+  fi
 }
 
-favouritesGtk() {
-	sudo apt-get install \
-		libreoffice \
-		libreoffice-help-en-gb \
-		libreoffice-l10n-en-gb \
-		myspell-en-gb \
-		default-jre \
-		openjdk-7-jre \
-		liblwjgl-java \
-		qt4-qtconfig \
-		comix \
-		p7zip-full \
-		clamav \
-		bleachbit \
-		firefox \
-		thunderbird \
-		thunderbird-locale-en-gb \
-		linux-headers-`uname -r` \
-		vlc \
-		vlc-plugin-pulse \
-		python-gpgme \
-		unrar \
-		synaptic \
-		ufw \
-		libglu1-mesa \
-		libgtk2.0-0:i386 \
-		libasound2 \
-		libsm6 \
-		libasound2-plugins \
-		libmpg123-0 \
-		libappindicator1 \
-		libjpeg62 \
-		libsdl-mixer1.2 \
-		clementine \
-		easytag \
-		bchunk \
-		lame \
-		flac \
-		sox \
-		mpg123 \
-		mpg321 \
-		focuswriter \
-		broadcom-sta-common \
-		broadcom-sta-source \
-		dkms \
-		driconf
-	echo
+favourites_gtk() {
+  sudo apt-get install \
+    libreoffice \
+    libreoffice-help-en-gb \
+    libreoffice-l10n-en-gb \
+    myspell-en-gb \
+    default-jre \
+    openjdk-7-jre \
+    liblwjgl-java \
+    qt4-qtconfig \
+    comix \
+    p7zip-full \
+    clamav \
+    bleachbit \
+    firefox \
+    thunderbird \
+    thunderbird-locale-en-gb \
+    linux-headers-`uname -r` \
+    vlc \
+    vlc-plugin-pulse \
+    python-gpgme \
+    unrar \
+    synaptic \
+    ufw \
+    libglu1-mesa \
+    libgtk2.0-0:i386 \
+    libasound2 \
+    libsm6 \
+    libasound2-plugins \
+    libmpg123-0 \
+    libappindicator1 \
+    libjpeg62 \
+    libsdl-mixer1.2 \
+    clementine \
+    easytag \
+    bchunk \
+    lame \
+    flac \
+    sox \
+    mpg123 \
+    mpg321 \
+    focuswriter \
+    broadcom-sta-common \
+    broadcom-sta-source \
+    dkms \
+    driconf
+  echo
 }
 
-favouritesQt() {
-	sudo apt-get install \
-		gtk2-engines-oxygen \
-		plasma-widget-lancelot \
-		plasma-widget-homerun \
-		yakuake
-	echo
+favourites_qt() {
+  sudo apt-get install \
+    gtk2-engines-oxygen \
+    plasma-widget-lancelot \
+    plasma-widget-homerun \
+    yakuake
+  echo
 }
 
 # SETUP FIREWALL ===============================================================
 
-setUfwFirewall() {
-	header
-	echo -e " \033[1mSetup Basic 'ufw' Firewall and Activate:\033[0m"
-	echo
-	echo " This option will enable the 'ufw' firewall and set up the default"
-	echo " rules to 'deny'."
-	echo
-	echo " NOTE: 'ufw' MUST be installed for this to function, it is typically"
-	echo " pre-installed on Linux Mint and Ubuntu."
-	echo
+set_ufw_firewall() {
+  header
+  echo -e " \033[1mSetup Basic 'ufw' Firewall and Activate:\033[0m"
+  echo
+  echo " This option will enable the 'ufw' firewall and set up the default"
+  echo " rules to 'deny'."
+  echo
+  echo " NOTE: 'ufw' MUST be installed for this to function, it is typically"
+  echo " pre-installed on Linux Mint and Ubuntu."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			sudo ufw enable
-			sudo ufw default deny
-			sudo ufw limit ssh
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			setUfwFirewall ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      sudo ufw enable
+      sudo ufw default deny
+      sudo ufw limit ssh
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      set_ufw_firewall ;;
+  esac
 }
 
 # UPDATE ANTIVIRUS DEFINITIONS =================================================
 
-updateClamAvDefinitions() {
-	header
-	echo -e " \033[1mUpdate ClamAV Virus Definitions:\033[0m"
-	echo
-	echo " This will update the ClamAV antivirus definitions to the latest"
-	echo " version. It ensures scan operations are accurate and up-to-date."
-	echo
-	echo " NOTE: ClamAV MUST be installed for this to function."
-	echo
+update_clamav_definitions() {
+  header
+  echo -e " \033[1mUpdate ClamAV Virus Definitions:\033[0m"
+  echo
+  echo " This will update the ClamAV antivirus definitions to the latest"
+  echo " version. It ensures scan operations are accurate and up-to-date."
+  echo
+  echo " NOTE: ClamAV MUST be installed for this to function."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			sudo killall freshclam > /dev/null 2>&1
-			sudo freshclam
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			updateClamAvDefinitions ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      sudo killall freshclam > /dev/null 2>&1
+      sudo freshclam
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      update_clamav_definitions ;;
+  esac
 }
 
 # HOME FOLDER VIRUS SCAN =======================================================
 
-clamAvHomeScan() {
-	header
-	echo -e " \033[1mClamAV Home Folder Scan:\033[0m"
-	echo
-	echo " This will scan all files and folders inside your home folder. A log"
-	echo " of this scan will be saved in your home folder."
-	echo
-	echo " This process may take a long time, please wait..."
-	echo
-	echo " NOTE: ClamAV MUST be installed for this to function."
-	echo
+clamav_home_folder_scan() {
+  header
+  echo -e " \033[1mClamAV Home Folder Scan:\033[0m"
+  echo
+  echo " This will scan all files and folders inside your home folder. A log"
+  echo " of this scan will be saved in your home folder."
+  echo
+  echo " This process may take a long time, please wait..."
+  echo
+  echo " NOTE: ClamAV MUST be installed for this to function."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			cd
-			rm clamscan-home*.log > /dev/null 2>&1
-			clamscan -r -l "clamscan-home($(date)).log"
-			cd
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			clamAvHomeScan ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      cd
+      rm clamscan-home*.log > /dev/null 2>&1
+      clamscan -r -l "clamscan-home($(date)).log"
+      cd
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      clamav_home_folder_scan ;;
+  esac
 }
 
 # REMOVABLE MEDIA VIRUS SCAN ===================================================
 
-clamAvMediaScan() {
-	header
-	echo -e " \033[1mClamAV Removable Drive Scan:\033[0m"
-	echo
-	echo " This will scan all files and folders on removable drives or other"
-	echo " mounted partitions and devices such as USB flash drives. A log of"
-	echo " this scan will be saved in your home folder."
-	echo
-	echo " This process may take a long time, please wait..."
-	echo
-	echo " NOTE: ClamAV MUST be installed for this to function."
-	echo
+clamav_external_media_scan() {
+  header
+  echo -e " \033[1mClamAV Removable Drive Scan:\033[0m"
+  echo
+  echo " This will scan all files and folders on removable drives or other"
+  echo " mounted partitions and devices such as USB flash drives. A log of"
+  echo " this scan will be saved in your home folder."
+  echo
+  echo " This process may take a long time, please wait..."
+  echo
+  echo " NOTE: ClamAV MUST be installed for this to function."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			cd
-			rm clamscan-removable-drives*.log > /dev/null 2>&1
-			clamscan /media -r -l "clamscan-removable-drives($(date)).log"
-			cd
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			clamAvMediaScan ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      cd
+      rm clamscan-removable-drives*.log > /dev/null 2>&1
+      clamscan /media -r -l "clamscan-removable-drives($(date)).log"
+      cd
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      clamav_external_media_scan ;;
+  esac
 }
 
 # VIRUS SCAN ENTIRE SYSTEM =====================================================
 
-clamAvFullScan() {
-	header
-	echo -e " \033[1mClamAV Full Computer Scan:\033[0m"
-	echo
-	echo " This option will scan all files and folders on your computer. It"
-	echo " will also scan any device connected to it. A log of this scan will"
-	echo " be saved in your home folder."
-	echo
-	echo " This process may take a long time, please wait..."
-	echo
-	echo " NOTE: ClamAV MUST be installed for this to function."
-	echo
+clamav_full_system_scan() {
+  header
+  echo -e " \033[1mClamAV Full Computer Scan:\033[0m"
+  echo
+  echo " This option will scan all files and folders on your computer. It"
+  echo " will also scan any device connected to it. A log of this scan will"
+  echo " be saved in your home folder."
+  echo
+  echo " This process may take a long time, please wait..."
+  echo
+  echo " NOTE: ClamAV MUST be installed for this to function."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			header
-			cd
-			rm clamscan-root*.log > /dev/null 2>&1
-			clamscan / -r -l "clamscan-root($(date)).log"
-			cd
-			completed ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			clamAvFullScan ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      header
+      cd
+      rm clamscan-root*.log > /dev/null 2>&1
+      clamscan / -r -l "clamscan-root($(date)).log"
+      cd
+      completed ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      clamav_full_system_scan ;;
+  esac
 }
 
 # RUN BLEACHBIT ================================================================
 
-runBleachbit() {
-	header
-	echo -e " \033[1mRun BleachBit (and Reboot):\033[0m"
-	echo
-	echo " This option will run BleachBit with a set of pre-defined options."
-	echo
-	echo " User passwords and Flash cache/cookies will not be erased."
-	echo
-	echo " If using GNOME3/KDE, your computer will automatically reboot once"
-	echo " the process is complete."
-	echo
-	echo " NOTE: BleachBit must be installed for this option to work."
-	echo
+run_bleachbit() {
+  header
+  echo -e " \033[1mRun BleachBit (and Reboot):\033[0m"
+  echo
+  echo " This option will run BleachBit with a set of pre-defined options."
+  echo
+  echo " User passwords and Flash cache/cookies will not be erased."
+  echo
+  echo " If using GNOME3/KDE, your computer will automatically reboot once"
+  echo " the process is complete."
+  echo
+  echo " NOTE: BleachBit must be installed for this option to work."
+  echo
 
-	read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
-	case $ANSWER in
-		Y|y)
-			bleachbitWrapper ;;
-		N|n)
-			checkNetwork ;;
-		*)
-			incorrect
-			runBleachbit ;;
-	esac
+  read -n1 -p " Do you wish to continue [Y/N]? " ANSWER
+  case $ANSWER in
+    Y|y)
+      bleachbit_wrapper ;;
+    N|n)
+      check_network ;;
+    *)
+      incorrect
+      run_bleachbit ;;
+  esac
 }
 
-bleachbitWrapper() {
-	header
-	sudo bleachbit -o -c \
-	adobe_reader.* \
-	amsn.* \
-	amule.* \
-	audacious.* \
-	bash.* \
-	beagle.* \
-	chromium.* \
-	d4x.* \
-	deepscan.* \
-	easytag.* \
-	elinks.* \
-	emesene.* \
-	epiphany.cache \
-	epiphany.cookies \
-	epiphany.places \
-	evolution.* \
-	exaile.* \
-	filezilla.* \
-	firefox.cache \
-	firefox.cookies \
-	firefox.dom \
-	firefox.download_history \
-	firefox.forms \
-	firefox.session_restore \
-	firefox.site_preferences \
-	firefox.url_history \
-	firefox.vacuum \
-	gedit.* \
-	gftp.* \
-	gimp.* \
-	gl-117.* \
-	gnome.* \
-	google_chrome.* \
-	google_earth.* \
-	google_toolbar.* \
-	gpodder.* \
-	gwenview.* \
-	hippo_opensim_viewer.* \
-	java.* \
-	kde.* \
-	konqueror.* \
-	liferea.* \
-	links2.* \
-	midnightcommander.* \
-	miro.* \
-	nautilus.* \
-	nexuiz.* \
-	openofficeorg.* \
-	opera.* \
-	pidgin.* \
-	realplayer.* \
-	recoll.* \
-	rhythmbox.* \
-	screenlets.* \
-	seamonkey.* \
-	secondlife_viewer.* \
-	skype.* \
-	system.cache \
-	system.clipboard \
-	system.desktop_entry \
-	system.recent_documents \
-	system.rotated_logs \
-	system.tmp \
-	system.trash \
-	thumbnails.* \
-	thunderbird.cache \
-	thunderbird.cookies \
-	thunderbird.vacuum \
-	transmission.cache \
-	tremulous.* \
-	vim.* \
-	vlc.* \
-	vuze.* \
-	wine.* \
-	winetricks.* \
-	x11.* \
-	xchat.* \
-	xine.*
+bleachbit_wrapper() {
+  header
+  sudo bleachbit -o -c \
+  adobe_reader.* \
+  amsn.* \
+  amule.* \
+  audacious.* \
+  bash.* \
+  beagle.* \
+  chromium.* \
+  d4x.* \
+  deepscan.* \
+  easytag.* \
+  elinks.* \
+  emesene.* \
+  epiphany.cache \
+  epiphany.cookies \
+  epiphany.places \
+  evolution.* \
+  exaile.* \
+  filezilla.* \
+  firefox.cache \
+  firefox.cookies \
+  firefox.dom \
+  firefox.download_history \
+  firefox.forms \
+  firefox.session_restore \
+  firefox.site_preferences \
+  firefox.url_history \
+  firefox.vacuum \
+  gedit.* \
+  gftp.* \
+  gimp.* \
+  gl-117.* \
+  gnome.* \
+  google_chrome.* \
+  google_earth.* \
+  google_toolbar.* \
+  gpodder.* \
+  gwenview.* \
+  hippo_opensim_viewer.* \
+  java.* \
+  kde.* \
+  konqueror.* \
+  liferea.* \
+  links2.* \
+  midnightcommander.* \
+  miro.* \
+  nautilus.* \
+  nexuiz.* \
+  openofficeorg.* \
+  opera.* \
+  pidgin.* \
+  realplayer.* \
+  recoll.* \
+  rhythmbox.* \
+  screenlets.* \
+  seamonkey.* \
+  secondlife_viewer.* \
+  skype.* \
+  system.cache \
+  system.clipboard \
+  system.desktop_entry \
+  system.recent_documents \
+  system.rotated_logs \
+  system.tmp \
+  system.trash \
+  thumbnails.* \
+  thunderbird.cache \
+  thunderbird.cookies \
+  thunderbird.vacuum \
+  transmission.cache \
+  tremulous.* \
+  vim.* \
+  vlc.* \
+  vuze.* \
+  wine.* \
+  winetricks.* \
+  x11.* \
+  xchat.* \
+  xine.*
 
-	rm -r $HOME/.thumbnails > /dev/null 2>&1
-	rm -r $HOME/.recently-used > /dev/null 2>&1
-	rm -r $HOME/.bash_history > /dev/null 2>&1
-	rm -r $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
-	mkdir $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
-	rm -r $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
+  rm -r $HOME/.thumbnails > /dev/null 2>&1
+  rm -r $HOME/.recently-used > /dev/null 2>&1
+  rm -r $HOME/.bash_history > /dev/null 2>&1
+  rm -r $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
+  mkdir $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
+  rm -r $HOME/.local/share/recently-used.xbel > /dev/null 2>&1
 
-	if [ "$DESKTOP_SESSION" = "mate" ] || [ "$DESKTOP_SESSION" = "xfce" ]
-		then
-			completed
-		else
-			restartNow
-	fi
+  if [ "$DESKTOP_SESSION" = "mate" ] || [ "$DESKTOP_SESSION" = "xfce" ]
+    then
+      completed
+    else
+      reboot_now
+  fi
 }
 
-restartNow() {
-	sudo reboot
+reboot_now() {
+  sudo reboot
 }
 
-checkNetwork() {
-	clear
-	setterm -cursor off
-	echo "Checking Internet connection, please wait..."
-	if ping -c 1 'google-public-dns-a.google.com' &> /dev/null ; then
-			menuOnline
-		else
-			menuOffline
-	fi
+check_network() {
+  clear
+  setterm -cursor off
+  echo "Checking Internet connection, please wait..."
+  if ping -c 1 'google-public-dns-a.google.com' &> /dev/null ; then
+      online_menu
+    else
+      offline_menu
+  fi
 }
 
 ################################################################################
 # PROGRAM MENUS
 ################################################################################
 
-menuOnline() {
-	header
-	echo -e " \033[1mSTATUS:\033[0m \e[32mOnline\e[0m"
-	echo
-	echo -e "\t\033[1m1)\033[0m Check for and Install Updates"
-	echo -e "\t\033[1m2)\033[0m Repair Software Catalog"
-	echo -e "\t\033[1m3)\033[0m Repair APT Package Manager"
-	echo -e "\t\033[1m4)\033[0m Install Favourite Software"
-	echo -e "\t\033[1m5)\033[0m Setup Basic 'ufw' Firewall and Activate"
-	echo -e "\t\033[1m6)\033[0m Update ClamAV Virus Definitions"
-	echo -e "\t\033[1m7)\033[0m ClamAV Home Folder Scan"
-	echo -e "\t\033[1m8)\033[0m ClamAV Removable Drive Scan"
-	echo -e "\t\033[1m9)\033[0m ClamAV Full Computer Scan"
-	echo -e "\t\033[1m0)\033[0m Run BleachBit (and Reboot)"
-	echo -e "\t\033[1mX) Exit Program\033[0m"
-	echo
-	echo -en "\tEnter an Option: "
-	read -n1 OPTION
+online_menu() {
+  header
+  echo -e " \033[1mSTATUS:\033[0m \e[32mOnline\e[0m"
+  echo
+  echo -e "\t\033[1m1)\033[0m Check for and Install Updates"
+  echo -e "\t\033[1m2)\033[0m Repair Software Catalog"
+  echo -e "\t\033[1m3)\033[0m Repair APT Package Manager"
+  echo -e "\t\033[1m4)\033[0m Install Favourite Software"
+  echo -e "\t\033[1m5)\033[0m Setup Basic 'ufw' Firewall and Activate"
+  echo -e "\t\033[1m6)\033[0m Update ClamAV Virus Definitions"
+  echo -e "\t\033[1m7)\033[0m ClamAV Home Folder Scan"
+  echo -e "\t\033[1m8)\033[0m ClamAV Removable Drive Scan"
+  echo -e "\t\033[1m9)\033[0m ClamAV Full Computer Scan"
+  echo -e "\t\033[1m0)\033[0m Run BleachBit (and Reboot)"
+  echo -e "\t\033[1mX) Exit Program\033[0m"
+  echo
+  echo -en "\tEnter an Option: "
+  read -n1 OPTION
 
-	while [ 1 ]
-	do
-		case $OPTION in
-			1)
-				installUpdates ;;
-			2)
-				repairSoftwareCatalog ;;
-			3)
-				repairPackageManager ;;
-			4)
-				installFavourites ;;
-			5)
-				setUfwFirewall ;;
-			6)
-				updateClamAvDefinitions ;;
-			7)
-				clamAvHomeScan ;;
-			8)
-				clamAvMediaScan ;;
-			9)
-				clamAvFullScan ;;
-			0)
-				runBleachbit ;;
-			X|x)
-				clear && break ;;
-			*)
-				incorrect
-				checkNetwork ;;
-		esac
-	done
+  while [ 1 ]
+  do
+    case $OPTION in
+      1)
+        install_updates ;;
+      2)
+        repair_software_catalog ;;
+      3)
+        repair_package_manager ;;
+      4)
+        install_favourites ;;
+      5)
+        set_ufw_firewall ;;
+      6)
+        update_clamav_definitions ;;
+      7)
+        clamav_home_folder_scan ;;
+      8)
+        clamav_external_media_scan ;;
+      9)
+        clamav_full_system_scan ;;
+      0)
+        run_bleachbit ;;
+      X|x)
+        clear && break ;;
+      *)
+        incorrect
+        check_network ;;
+    esac
+  done
 }
 
-menuOffline() {
-	header
-	echo -e " \033[1mSTATUS:\033[0m \e[31mOffline\e[0m"
-	echo
-	echo -e "\t\033[1m1)\033[0m Setup Basic 'ufw' Firewall and Activate"
-	echo -e "\t\033[1m2)\033[0m ClamAV Home Folder Scan"
-	echo -e "\t\033[1m3)\033[0m ClamAV Removable Drive Scan"
-	echo -e "\t\033[1m4)\033[0m ClamAV Full Computer Scan"
-	echo -e "\t\033[1m5)\033[0m Run BleachBit (and Reboot)"
-	echo -e "\t\033[1mX) Exit Program\033[0m"
-	echo
-	echo -en "\tEnter an Option: "
-	read -n1 OPTION
+offline_menu() {
+  header
+  echo -e " \033[1mSTATUS:\033[0m \e[31mOffline\e[0m"
+  echo
+  echo -e "\t\033[1m1)\033[0m Setup Basic 'ufw' Firewall and Activate"
+  echo -e "\t\033[1m2)\033[0m ClamAV Home Folder Scan"
+  echo -e "\t\033[1m3)\033[0m ClamAV Removable Drive Scan"
+  echo -e "\t\033[1m4)\033[0m ClamAV Full Computer Scan"
+  echo -e "\t\033[1m5)\033[0m Run BleachBit (and Reboot)"
+  echo -e "\t\033[1mX) Exit Program\033[0m"
+  echo
+  echo -en "\tEnter an Option: "
+  read -n1 OPTION
 
-	while [ 1 ]
-	do
-		case $OPTION in
-			1)
-				setUfwFirewall ;;
-			2)
-				clamAvHomeScan ;;
-			3)
-				clamAvMediaScan ;;
-			4)
-				clamAvFullScan ;;
-			5)
-				runBleachbit ;;
-			X|x)
-				clear && break ;;
-			*)
-				incorrect
-				checkNetwork ;;
-		esac
-	done
+  while [ 1 ]
+  do
+    case $OPTION in
+      1)
+        set_ufw_firewall ;;
+      2)
+        clamav_home_folder_scan ;;
+      3)
+        clamav_external_media_scan ;;
+      4)
+        clamav_full_system_scan ;;
+      5)
+        run_bleachbit ;;
+      X|x)
+        clear && break ;;
+      *)
+        incorrect
+        check_network ;;
+    esac
+  done
 }
 
 ################################################################################
 # PROGRAM KICKSTART
 ################################################################################
 
-checkNetwork
+check_network
 
 # End of file.
